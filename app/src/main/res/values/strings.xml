@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">project_f104774</string>
+    <string name="send">Send</string>
+    <string name="specialty_informatics">Informatics</string>
+    <string name="specialty_it">IT</string>
+    <string name="specialty_multimedia">Multymedia</string>
+    <string name="your_name">Your name</string>
+    <string name="insert_into_database">Insert into database</string>
+    <string name="please_write_your_name">Please write your name</string>
+    <string name="add_book">Add Book</string>
+    <string name="your_books">Your books</string>
+</resources>
