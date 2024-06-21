@@ -1,4 +1,4 @@
-package bg.nbu.project_f104774;
+package bg.nbu.project_f104774.model;
 
 public class BookReview {
     private int id;

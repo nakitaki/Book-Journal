@@ -1,4 +1,4 @@
-package bg.nbu.project_f104774;
+package bg.nbu.project_f104774.activity;
 
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
@@ -9,6 +9,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import bg.nbu.project_f104774.database.MyDataBaseHelper;
+import bg.nbu.project_f104774.R;
 
 public class AddReviewActivity extends AppCompatActivity {
 

@@ -15,14 +15,14 @@
 
         <!--сървиса може да се създава от системата-->
         <!--дали компоненти на други приложения могат да се обръщат към сървиса        -->
-        <service android:name=".MyService"
+        <service android:name=".service.MyService"
             android:enabled="true"
             android:exported="false" />
-        <activity android:name=".DataActivity" />
-        <activity android:name=".BooksActivity" />
-        <activity android:name=".AddReviewActivity" />
+        <activity android:name=".activity.DataActivity" />
+        <activity android:name=".activity.BooksActivity" />
+        <activity android:name=".activity.AddReviewActivity" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

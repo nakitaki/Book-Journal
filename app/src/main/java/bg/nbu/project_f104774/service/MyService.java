@@ -1,4 +1,4 @@
-package bg.nbu.project_f104774;
+package bg.nbu.project_f104774.service;
 
 import android.app.Service;
 import android.content.Intent;
@@ -7,6 +7,8 @@ import android.os.IBinder;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+
+import bg.nbu.project_f104774.R;
 
 public class MyService extends Service {
     //компонент за възпроизвеждане на музикален файл

@@ -1,4 +1,4 @@
-package bg.nbu.project_f104774;
+package bg.nbu.project_f104774.activity;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -10,6 +10,11 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
+
+import bg.nbu.project_f104774.model.BookReview;
+import bg.nbu.project_f104774.adapter.BookReviewAdapter;
+import bg.nbu.project_f104774.database.MyDataBaseHelper;
+import bg.nbu.project_f104774.R;
 
 public class DataActivity extends AppCompatActivity {
 

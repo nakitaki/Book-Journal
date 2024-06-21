@@ -1,4 +1,4 @@
-package bg.nbu.project_f104774;
+package bg.nbu.project_f104774.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,9 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
+import bg.nbu.project_f104774.model.BookReview;
+import bg.nbu.project_f104774.R;
 
 public class BookReviewAdapter extends BaseAdapter {
     private Context context;

@@ -1,9 +1,11 @@
-package bg.nbu.project_f104774;
+package bg.nbu.project_f104774.database;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import bg.nbu.project_f104774.model.BookReview;
 
 public class MyDataBaseHelper extends SQLiteOpenHelper {
 

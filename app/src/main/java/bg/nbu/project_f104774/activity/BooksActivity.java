@@ -1,8 +1,10 @@
-package bg.nbu.project_f104774;
+package bg.nbu.project_f104774.activity;
 
 import android.os.Bundle;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+
+import bg.nbu.project_f104774.R;
 
 public class BooksActivity extends AppCompatActivity {
 
