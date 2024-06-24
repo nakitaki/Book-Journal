@@ -1,24 +1,25 @@
 package bg.nbu.project_f104774.activity;
 
-import static android.content.Intent.getIntent;
-
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import bg.nbu.project_f104774.R;
 import bg.nbu.project_f104774.database.MyDataBaseHelper;
+import bg.nbu.project_f104774.fragment.DetailsFragment;
 import bg.nbu.project_f104774.model.BookReview;
 
 public class EditReviewActivity extends AppCompatActivity {
 
-    EditText editBookName, editAuthor, editSummary, editRate;
+    TextView bookName, author;
+    EditText editSummary, editRate;
     Button saveButton;
     MyDataBaseHelper dbHelper;
     long reviewId;
@@ -28,8 +29,8 @@ public class EditReviewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_review);
 
-        editBookName = findViewById(R.id.edit_book_name);
-        editAuthor = findViewById(R.id.edit_author);
+        bookName = findViewById(R.id.edit_book_name);
+        author = findViewById(R.id.edit_author);
         editSummary = findViewById(R.id.edit_summary);
         editRate = findViewById(R.id.edit_rate);
         saveButton = findViewById(R.id.save_button);
@@ -53,14 +54,16 @@ public class EditReviewActivity extends AppCompatActivity {
                 updateReview(reviewId);
             }
         });
+
+
     }
 
     private void populateFields() {
         // Fetch current review details from database and populate EditText fields
         BookReview bookReview = dbHelper.getBookReviewById((int) reviewId);
         if (bookReview != null) {
-            editBookName.setText(bookReview.getName());
-            editAuthor.setText(bookReview.getAuthor());
+            bookName.setText(bookReview.getName());
+            author.setText(bookReview.getAuthor());
             editSummary.setText(bookReview.getSummary());
             editRate.setText(String.valueOf(bookReview.getRate()));
         } else {
@@ -70,8 +73,8 @@ public class EditReviewActivity extends AppCompatActivity {
     }
 
     private void updateReview(long reviewId) {
-        String bookName = editBookName.getText().toString().trim();
-        String author = editAuthor.getText().toString().trim();
+        String bookName = this.bookName.getText().toString().trim();
+        String author = this.author.getText().toString().trim();
         String summary = editSummary.getText().toString().trim();
         String rateStr = editRate.getText().toString().trim();
 
@@ -105,9 +108,23 @@ public class EditReviewActivity extends AppCompatActivity {
             Toast.makeText(this, "Error updating review", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, "Review updated successfully", Toast.LENGTH_SHORT).show();
-            finish(); // Close activity after successful update
-        }
 
-        database.close();
+            // Close database connection
+            database.close();
+
+            // Navigate back to DetailsFragment
+            navigateToDetailsFragment(reviewId);
+        }
+    }
+
+    private void navigateToDetailsFragment(long reviewId) {
+        // Create an instance of DetailsFragment with arguments
+        DetailsFragment detailsFragment = DetailsFragment.newInstance((int) reviewId);
+
+        // Replace the current fragment (EditReviewActivity) with DetailsFragment
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container_view, detailsFragment)
+                .addToBackStack(null)  // Optional: Adds the transaction to the back stack
+                .commit();
     }
 }
