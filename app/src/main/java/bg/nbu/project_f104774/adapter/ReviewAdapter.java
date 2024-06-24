@@ -12,11 +12,11 @@ import java.util.ArrayList;
 import bg.nbu.project_f104774.model.BookReview;
 import bg.nbu.project_f104774.R;
 
-public class BookReviewAdapter extends BaseAdapter {
+public class ReviewAdapter extends BaseAdapter {
     private Context context;
     private ArrayList<BookReview> bookReviews;
 
-    public BookReviewAdapter(Context context, ArrayList<BookReview> bookReviews) {
+    public ReviewAdapter(Context context, ArrayList<BookReview> bookReviews) {
         this.context = context;
         this.bookReviews = bookReviews;
     }

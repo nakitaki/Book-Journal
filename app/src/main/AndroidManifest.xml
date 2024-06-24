@@ -18,9 +18,8 @@
         <service android:name=".service.MyService"
             android:enabled="true"
             android:exported="false" />
-        <activity android:name=".activity.DataActivity" />
+        <activity android:name=".activity.AllReviewsActivity" />
         <activity android:name=".activity.EditReviewActivity" />
-        <activity android:name=".activity.BooksActivity" />
         <activity android:name=".activity.AddReviewActivity" />
         <activity
             android:name=".activity.MainActivity"

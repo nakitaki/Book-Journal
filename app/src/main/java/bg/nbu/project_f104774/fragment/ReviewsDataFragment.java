@@ -19,11 +19,11 @@ import androidx.fragment.app.Fragment;
 import java.util.ArrayList;
 
 import bg.nbu.project_f104774.R;
-import bg.nbu.project_f104774.adapter.BookReviewAdapter;
+import bg.nbu.project_f104774.adapter.ReviewAdapter;
 import bg.nbu.project_f104774.database.MyDataBaseHelper;
 import bg.nbu.project_f104774.model.BookReview;
 
-public class DataFragment extends Fragment {
+public class ReviewsDataFragment extends Fragment {
 
     TextView textView;
     ArrayList<BookReview> dataList;
@@ -34,7 +34,7 @@ public class DataFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_data, container, false);
+        View view = inflater.inflate(R.layout.fragment_review_data, container, false);
 
         textView = view.findViewById(R.id.name_text);
         listView = view.findViewById(R.id.list);
@@ -63,7 +63,7 @@ public class DataFragment extends Fragment {
                 dataList.add(bookReview);
             }
 
-            BookReviewAdapter adapter = new BookReviewAdapter(getActivity(), dataList);
+            ReviewAdapter adapter = new ReviewAdapter(getActivity(), dataList);
             listView.setAdapter(adapter);
 
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -77,12 +77,12 @@ public class DataFragment extends Fragment {
                     // Display the book review details (replace with your actual implementation)
                     Toast.makeText(getActivity(), "Selected: " + selectedBookReview.getName(), Toast.LENGTH_SHORT).show();
 
-                    DetailsFragment detailsFragment = DetailsFragment.newInstance(bookId);
+                    ReviewDetailsFragment reviewDetailsFragment = ReviewDetailsFragment.newInstance(bookId);
 
                     Log.d("DataFragment", "Passing Book ID: " + bookId);
 
                     getParentFragmentManager().beginTransaction()
-                            .replace(R.id.fragment_container_view, detailsFragment)
+                            .replace(R.id.fragment_container_view, reviewDetailsFragment)
                             .addToBackStack(null)
                             .commit();
                 }

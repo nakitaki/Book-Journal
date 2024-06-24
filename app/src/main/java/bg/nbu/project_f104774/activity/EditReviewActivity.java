@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import bg.nbu.project_f104774.R;
 import bg.nbu.project_f104774.database.MyDataBaseHelper;
-import bg.nbu.project_f104774.fragment.DetailsFragment;
+import bg.nbu.project_f104774.fragment.ReviewDetailsFragment;
 import bg.nbu.project_f104774.model.BookReview;
 
 public class EditReviewActivity extends AppCompatActivity {
@@ -119,11 +119,11 @@ public class EditReviewActivity extends AppCompatActivity {
 
     private void navigateToDetailsFragment(long reviewId) {
         // Create an instance of DetailsFragment with arguments
-        DetailsFragment detailsFragment = DetailsFragment.newInstance((int) reviewId);
+        ReviewDetailsFragment reviewDetailsFragment = ReviewDetailsFragment.newInstance((int) reviewId);
 
         // Replace the current fragment (EditReviewActivity) with DetailsFragment
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container_view, detailsFragment)
+                .replace(R.id.fragment_container_view, reviewDetailsFragment)
                 .addToBackStack(null)  // Optional: Adds the transaction to the back stack
                 .commit();
     }

@@ -21,7 +21,7 @@ import bg.nbu.project_f104774.activity.EditReviewActivity;
 import bg.nbu.project_f104774.database.MyDataBaseHelper;
 import bg.nbu.project_f104774.model.BookReview;
 
-public class DetailsFragment extends Fragment {
+public class ReviewDetailsFragment extends Fragment {
 
     private static final String ARG_BOOK_ID = "bookId";
     private int bookId;
@@ -31,8 +31,8 @@ public class DetailsFragment extends Fragment {
     Button deleteButton;
 
 
-    public static DetailsFragment newInstance(int bookId) {
-        DetailsFragment fragment = new DetailsFragment();
+    public static ReviewDetailsFragment newInstance(int bookId) {
+        ReviewDetailsFragment fragment = new ReviewDetailsFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_BOOK_ID, bookId);
         fragment.setArguments(args);
@@ -42,7 +42,7 @@ public class DetailsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.book_details, container, false);
+        View view = inflater.inflate(R.layout.fragment_review_details, container, false);
 
         deleteButton = view.findViewById(R.id.delete_button);
         editButton = view.findViewById(R.id.edit_button);

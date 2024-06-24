@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         buttonBooks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, DataActivity.class);
+                Intent intent = new Intent(MainActivity.this, AllReviewsActivity.class);
                 startActivity(intent);
             }
         });
