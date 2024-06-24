@@ -46,13 +46,13 @@ public class BookReviewAdapter extends BaseAdapter {
 
         TextView nameTextView = convertView.findViewById(R.id.name_text_view);
         TextView authorTextView = convertView.findViewById(R.id.author_text_view);
-        TextView summaryTextView = convertView.findViewById(R.id.summary_text_view);
-        TextView rateTextView = convertView.findViewById(R.id.rate_text_view);
+//        TextView summaryTextView = convertView.findViewById(R.id.summary_text_view);
+//        TextView rateTextView = convertView.findViewById(R.id.rate_text_view);
 
         nameTextView.setText(bookReview.getName());
         authorTextView.setText(bookReview.getAuthor());
-        summaryTextView.setText(bookReview.getSummary());
-        rateTextView.setText(String.valueOf(bookReview.getRate()));
+//        summaryTextView.setText(bookReview.getSummary());
+//        rateTextView.setText(String.valueOf(bookReview.getRate()));
 
         return convertView;
     }

@@ -20,17 +20,17 @@
         android:text="Author"
         android:textSize="14sp"/>
 
-    <TextView
-        android:id="@+id/summary_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Summary"
-        android:textSize="14sp"/>
+<!--    <TextView-->
+<!--        android:id="@+id/summary_text_view"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Summary"-->
+<!--        android:textSize="14sp"/>-->
 
-    <TextView
-        android:id="@+id/rate_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Rate"
-        android:textSize="14sp"/>
+<!--    <TextView-->
+<!--        android:id="@+id/rate_text_view"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Rate"-->
+<!--        android:textSize="14sp"/>-->
 </LinearLayout>

@@ -2,6 +2,7 @@ package bg.nbu.project_f104774.database;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -53,7 +54,7 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void addRecipe(BookReview bookReview) {
+    public void addBookReview(BookReview bookReview) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_BOOK_NAME, bookReview.getName());
@@ -65,6 +66,37 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+
+    public BookReview getBookReviewById(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(
+                TABLE_NAME,
+                null,
+                UID + "=?",
+                new String[]{String.valueOf(id)},
+                null,
+                null,
+                null
+        );
+
+        if (cursor != null && cursor.moveToFirst()) {
+            BookReview bookReview = new BookReview(
+                    cursor.getInt(cursor.getColumnIndexOrThrow(UID)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_BOOK_NAME)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_AUTHOR)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_SUMMARY)),
+                    cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_RATE))
+            );
+            cursor.close();
+            return bookReview;
+        } else {
+            // Handle the case where no data was found
+            if (cursor != null) {
+                cursor.close();
+            }
+            return null;
+        }
+    }
 
 
 }
