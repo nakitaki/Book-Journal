@@ -40,17 +40,13 @@ public class ReviewsDataFragment extends Fragment {
         listView = view.findViewById(R.id.list);
         dataList = new ArrayList<>();
 
-        // Initialize MyDataBaseHelper
         dbHelper = new MyDataBaseHelper(getActivity());
-
-        // Open database for reading and writing
         database = dbHelper.getReadableDatabase();
 
-        // Retrieve data using rawQuery() method
         Cursor dataCursor = database.rawQuery("SELECT * FROM " + MyDataBaseHelper.TABLE_NAME, null);
 
         if (dataCursor.getCount() == 0) {
-            Toast.makeText(getActivity(), "The database is empty!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "The database is empty!", Toast.LENGTH_LONG).show();
         } else {
             while (dataCursor.moveToNext()) {
                 int id = dataCursor.getInt(dataCursor.getColumnIndexOrThrow(MyDataBaseHelper.UID));
@@ -71,10 +67,8 @@ public class ReviewsDataFragment extends Fragment {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     BookReview selectedBookReview = dataList.get(position);
 
-                    // Fetch the BookReview by ID (if needed)
                     int bookId = selectedBookReview.getId();
 
-                    // Display the book review details (replace with your actual implementation)
                     Toast.makeText(getActivity(), "Selected: " + selectedBookReview.getName(), Toast.LENGTH_SHORT).show();
 
                     ReviewDetailsFragment reviewDetailsFragment = ReviewDetailsFragment.newInstance(bookId);
