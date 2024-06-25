@@ -19,11 +19,11 @@
         <service android:name=".service.MyService"
             android:enabled="true"
             android:exported="false" />
-        <activity android:name=".activity.BookActivity" />
+        <activity android:name=".activity.BooksSearchActivity" />
         <activity android:name=".activity.BookDetailActivity" />
-        <activity android:name=".activity.AllReviewsActivity" />
-        <activity android:name=".activity.EditReviewActivity" />
-        <activity android:name=".activity.AddReviewActivity" />
+        <activity android:name=".activity.ReviewsAllActivity" />
+        <activity android:name=".activity.ReviewEditActivity" />
+        <activity android:name=".activity.ReviewAddActivity" />
         <activity
             android:name=".activity.MainActivity"
             android:exported="true">

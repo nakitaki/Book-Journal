@@ -17,7 +17,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import bg.nbu.project_f104774.R;
-import bg.nbu.project_f104774.activity.EditReviewActivity;
+import bg.nbu.project_f104774.activity.ReviewEditActivity;
 import bg.nbu.project_f104774.database.MyDataBaseHelper;
 import bg.nbu.project_f104774.model.BookReview;
 
@@ -112,8 +112,8 @@ public class ReviewDetailsFragment extends Fragment {
     }
 
     private void editReview(long reviewId) {
-        // Example: Navigate to EditReviewActivity passing the reviewId
-        Intent intent = new Intent(getActivity(), EditReviewActivity.class);
+        // Example: Navigate to ReviewEditActivity passing the reviewId
+        Intent intent = new Intent(getActivity(), ReviewEditActivity.class);
         intent.putExtra("reviewId", reviewId);
         startActivity(intent);
     }

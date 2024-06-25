@@ -16,7 +16,7 @@ import bg.nbu.project_f104774.database.MyDataBaseHelper;
 import bg.nbu.project_f104774.fragment.ReviewDetailsFragment;
 import bg.nbu.project_f104774.model.BookReview;
 
-public class EditReviewActivity extends AppCompatActivity {
+public class ReviewEditActivity extends AppCompatActivity {
 
     TextView bookName, author;
     EditText editSummary, editRate;
@@ -83,11 +83,12 @@ public class EditReviewActivity extends AppCompatActivity {
             return;
         }
 
-        int rate = Integer.parseInt(rateStr);
-        if (rate < 1 || rate > 5) {
-            Toast.makeText(this, "Rate must be between 1 and 5", Toast.LENGTH_SHORT).show();
+        if (!isValidRate(rateStr)) {
+            Toast.makeText(this, "Rate must be a number between 1 and 5", Toast.LENGTH_SHORT).show();
             return;
         }
+        int rate = Integer.parseInt(rateStr);
+
 
         // Update review in database
         SQLiteDatabase database = dbHelper.getWritableDatabase();
@@ -121,10 +122,18 @@ public class EditReviewActivity extends AppCompatActivity {
         // Create an instance of DetailsFragment with arguments
         ReviewDetailsFragment reviewDetailsFragment = ReviewDetailsFragment.newInstance((int) reviewId);
 
-        // Replace the current fragment (EditReviewActivity) with DetailsFragment
+        // Replace the current fragment (ReviewEditActivity) with DetailsFragment
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container_view, reviewDetailsFragment)
                 .addToBackStack(null)  // Optional: Adds the transaction to the back stack
                 .commit();
+    }
+
+    private boolean isValidRate(String rateStr) {
+        // Regular expression to check for valid integers in the range of 1 to 5
+        String regex = "[1-5]";
+
+        // Check if rateStr matches the regex
+        return rateStr.matches(regex);
     }
 }

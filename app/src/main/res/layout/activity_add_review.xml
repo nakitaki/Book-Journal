@@ -11,33 +11,33 @@
         android:id="@+id/book_name_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Book Name"
+        android:hint="@string/book_name"
         android:inputType="text"/>
 
     <EditText
         android:id="@+id/author_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Author"
+        android:hint="@string/author"
         android:inputType="text"/>
 
     <EditText
         android:id="@+id/summary_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Summary"
+        android:hint="@string/summary"
         android:inputType="textMultiLine"/>
 
     <EditText
         android:id="@+id/rate_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Rate (1-5)"
+        android:hint="@string/rate_1_5"
         android:inputType="number"/>
 
     <Button
         android:id="@+id/save_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Save Review"/>
+        android:text="@string/save_review"/>
 </LinearLayout>

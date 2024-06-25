@@ -1,12 +1,13 @@
 package bg.nbu.project_f104774.activity;
 
-import static bg.nbu.project_f104774.database.MyDataBaseHelper.COLUMN_BOOK_NAME;
-
 import android.app.TaskStackBuilder;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,18 +19,18 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import bg.nbu.project_f104774.database.MyDataBaseHelper;
 import bg.nbu.project_f104774.R;
 import bg.nbu.project_f104774.model.Book;
 import bg.nbu.project_f104774.model.VolumeInfo;
 
-public class AddReviewActivity extends AppCompatActivity {
+public class ReviewAddActivity extends AppCompatActivity {
 
     EditText bookNameEditText, authorEditText, summaryEditText, rateEditText;
     Button saveButton;
     MyDataBaseHelper dbHelper;
+    Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +57,23 @@ public class AddReviewActivity extends AppCompatActivity {
             }
         }
 
+        handler = new Handler(Looper.getMainLooper()) {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                switch (msg.what) {
+                    case MSG_REVIEW_SAVED:
+                        handleReviewSaved((Long) msg.obj);
+                        break;
+                    case MSG_ERROR:
+                        handleSaveError();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        };
+
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,9 +82,8 @@ public class AddReviewActivity extends AppCompatActivity {
         });
     }
 
-    private String listToCommaSeparatedString(List<String> list) {
-        return list.stream().collect(Collectors.joining(", "));
-    }
+    private static final int MSG_REVIEW_SAVED = 1;
+    private static final int MSG_ERROR = 2;
 
     private void saveReview() {
         String bookName = bookNameEditText.getText().toString().trim();
@@ -85,32 +102,51 @@ public class AddReviewActivity extends AppCompatActivity {
             return;
         }
 
-        SQLiteDatabase database = dbHelper.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_BOOK_NAME, bookName);
-        values.put(MyDataBaseHelper.COLUMN_AUTHOR, author);
-        values.put(MyDataBaseHelper.COLUMN_SUMMARY, summary);
-        values.put(MyDataBaseHelper.COLUMN_RATE, rate);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SQLiteDatabase database = dbHelper.getWritableDatabase();
+                ContentValues values = new ContentValues();
+                values.put(MyDataBaseHelper.COLUMN_BOOK_NAME, bookName);
+                values.put(MyDataBaseHelper.COLUMN_AUTHOR, author);
+                values.put(MyDataBaseHelper.COLUMN_SUMMARY, summary);
+                values.put(MyDataBaseHelper.COLUMN_RATE, rate);
 
-        long newRowId = database.insert(MyDataBaseHelper.TABLE_NAME, null, values);
+                long newRowId = database.insert(MyDataBaseHelper.TABLE_NAME, null, values);
 
-        if (newRowId == -1) {
-            Toast.makeText(this, "Error with saving review", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "Review saved", Toast.LENGTH_SHORT).show();
-            Intent mainIntent = new Intent(this, MainActivity.class);
-            mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                if (newRowId == -1) {
+                    handler.sendEmptyMessage(MSG_ERROR);
+                } else {
+                    Message message = handler.obtainMessage(MSG_REVIEW_SAVED, newRowId);
+                    handler.sendMessage(message);
+                }
 
-            Intent allReviewsIntent = new Intent(this, AllReviewsActivity.class);
+                database.close();
+            }
+        }).start();
+    }
 
-            TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-            stackBuilder.addNextIntent(mainIntent);
-            stackBuilder.addNextIntent(allReviewsIntent);
+    private void handleReviewSaved(long newRowId) {
+        Toast.makeText(this, "Review saved successfully", Toast.LENGTH_SHORT).show();
 
-            stackBuilder.startActivities();
-            finish();
-        }
+        Intent mainIntent = new Intent(this, MainActivity.class);
+        mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
 
-        database.close();
+        Intent allReviewsIntent = new Intent(this, ReviewsAllActivity.class);
+
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+        stackBuilder.addNextIntent(mainIntent);
+        stackBuilder.addNextIntent(allReviewsIntent);
+
+        stackBuilder.startActivities();
+        finish();
+    }
+
+    private void handleSaveError() {
+        Toast.makeText(this, "Error with saving review", Toast.LENGTH_SHORT).show();
+    }
+
+    private String listToCommaSeparatedString(List<String> list) {
+        return String.join(", ", list);
     }
 }

@@ -8,7 +8,7 @@
         android:id="@+id/name_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Book Reviews"
+        android:text="@string/book_reviews"
         android:textSize="18sp"
         android:gravity="center"
         android:padding="16dp"/>

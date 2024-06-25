@@ -9,7 +9,7 @@
         android:id="@+id/name_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Book Name"
+        android:text="@string/book_name"
         android:textSize="16sp"
         android:textStyle="bold"/>
 
@@ -17,7 +17,7 @@
         android:id="@+id/author_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Author"
+        android:text="@string/author"
         android:textSize="14sp"/>
 
 <!--    <TextView-->

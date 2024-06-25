@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">project_f104774</string>
+    <string name="add_review">Добави ревю</string>
+    <string name="book_name">Име</string>
+    <string name="author">Автор</string>
+    <string name="summary">Резюме</string>
+    <string name="rate_1_5">Оценка (1-5)</string>
+    <string name="save_review">"Запази "</string>
+    <string name="search_by_title">Заглавие</string>
+    <string name="search_by_author">Автор</string>
+    <string name="search">Търси</string>
+    <string name="name">Име</string>
+    <string name="details">Детайли</string>
+    <string name="rating">Оценка</string>
+    <string name="save">Запази</string>
+    <string name="your_books">Твоите книги</string>
+    <string name="add_book">Добави книга</string>
+    <string name="book_reviews">Ревюта на книги</string>
+    <string name="edit">Редактирай</string>
+    <string name="start_music">Пусни музика</string>
+    <string name="stop_music">Спри музика</string>
+    <string name="delete">Изтрий</string>
+</resources>

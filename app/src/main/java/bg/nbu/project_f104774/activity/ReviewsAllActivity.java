@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import bg.nbu.project_f104774.R;
 import bg.nbu.project_f104774.fragment.ReviewsDataFragment;
 
-public class AllReviewsActivity extends AppCompatActivity {
+public class ReviewsAllActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     tools:context=".activity.MainActivity">
 
     <Button
@@ -10,14 +11,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/your_books"
-        android:layout_centerInParent="true"
-        />
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:id="@+id/button_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/add_book"
-        android:layout_centerInParent="true"
-        android:layout_below="@+id/button_books"/>
+        android:layout_below="@id/button_books"
+        android:layout_marginTop="16dp"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/service_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/start_music"
+        android:layout_below="@id/button_add"
+        android:layout_marginTop="16dp"
+        android:layout_centerHorizontal="true"
+        android:onClick="toggleService" />
+
 </RelativeLayout>

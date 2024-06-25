@@ -24,7 +24,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class BookActivity extends AppCompatActivity {
+public class BooksSearchActivity extends AppCompatActivity {
 
     private static final String API_KEY = "AIzaSyADqcs2PchZqhsQsa7QW84D5ydBwNRWtCg";
     private EditText searchTitleEditText;
@@ -72,11 +72,11 @@ public class BookActivity extends AppCompatActivity {
         } else if (!author.isEmpty()) {
             query = "inauthor:" + author;
         } else {
-            Log.e("BookActivity", "Both title and author are empty");
+            Log.e("BooksSearchActivity", "Both title and author are empty");
             return;
         }
 
-        Log.d("BookActivity", "Query: " + query);
+        Log.d("BooksSearchActivity", "Query: " + query);
 
         BooksApiService service = ApiClient.getRetrofitInstance().create(BooksApiService.class);
         Call<BookResponse> call = service.getBooks(query, title, author, API_KEY);
@@ -87,20 +87,20 @@ public class BookActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     List<Book> newBooks = response.body().getBooks();
                     if (newBooks != null && !newBooks.isEmpty()) {
-                        Log.d("BookActivity", "Number of books found: " + newBooks.size());
+                        Log.d("BooksSearchActivity", "Number of books found: " + newBooks.size());
                         updateBooksOnUiThread(newBooks);
                     } else {
-                        Log.d("BookActivity", "No books found");
+                        Log.d("BooksSearchActivity", "No books found");
                         displayNoBooksFoundMessage();
                     }
                 } else {
-                    Log.e("BookActivity", "Request failed: " + response.message());
+                    Log.e("BooksSearchActivity", "Request failed: " + response.message());
                 }
             }
 
             @Override
             public void onFailure(Call<BookResponse> call, Throwable t) {
-                Log.e("BookActivity", "Network request failed: " + t.getMessage());
+                Log.e("BooksSearchActivity", "Network request failed: " + t.getMessage());
             }
         });
     }
@@ -119,7 +119,7 @@ public class BookActivity extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(BookActivity.this, "No books found", Toast.LENGTH_SHORT).show();
+                Toast.makeText(BooksSearchActivity.this, "No books found", Toast.LENGTH_SHORT).show();
             }
         });
     }
