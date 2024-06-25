@@ -1,6 +1,7 @@
 package bg.nbu.project_f104774.activity;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
@@ -10,8 +11,16 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
 import bg.nbu.project_f104774.database.MyDataBaseHelper;
 import bg.nbu.project_f104774.R;
+import bg.nbu.project_f104774.model.Book;
+import bg.nbu.project_f104774.model.VolumeInfo;
 
 public class AddReviewActivity extends AppCompatActivity {
 
@@ -32,12 +41,28 @@ public class AddReviewActivity extends AppCompatActivity {
 
         dbHelper = new MyDataBaseHelper(this);
 
+        String bookJson = getIntent().getStringExtra("bookJson");
+        if (bookJson != null) {
+            try {
+                Book book = Book.fromJson(new JSONObject(bookJson));
+                VolumeInfo volumeInfo = book.getVolumeInfo();
+                bookNameEditText.setText(volumeInfo.getTitle() != null ? volumeInfo.getTitle() : "No title");
+                authorEditText.setText(volumeInfo.getAuthors() != null ? listToCommaSeparatedString(volumeInfo.getAuthors()) : "No authors");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 saveReview();
             }
         });
+    }
+
+    private String listToCommaSeparatedString(List<String> list) {
+        return list.stream().collect(Collectors.joining(", "));
     }
 
     private void saveReview() {
@@ -70,7 +95,10 @@ public class AddReviewActivity extends AppCompatActivity {
             Toast.makeText(this, "Error with saving review", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, "Review saved with id: " + newRowId, Toast.LENGTH_SHORT).show();
-            finish(); // close the activity and return to the previous one
+            Intent intent = new Intent(AddReviewActivity.this, AllReviewsActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK );
+            startActivity(intent);
+            finish(); // close the activity
         }
 
         database.close();
