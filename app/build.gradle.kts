@@ -42,4 +42,9 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
     implementation(libs.material.v1110)
     implementation(libs.viewpager2)
+
+
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.json)
 }
