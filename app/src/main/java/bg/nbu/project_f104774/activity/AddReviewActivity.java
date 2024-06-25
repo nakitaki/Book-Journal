@@ -1,5 +1,8 @@
 package bg.nbu.project_f104774.activity;
 
+import static bg.nbu.project_f104774.database.MyDataBaseHelper.COLUMN_BOOK_NAME;
+
+import android.app.TaskStackBuilder;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -84,7 +87,7 @@ public class AddReviewActivity extends AppCompatActivity {
 
         SQLiteDatabase database = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(MyDataBaseHelper.COLUMN_BOOK_NAME, bookName);
+        values.put(COLUMN_BOOK_NAME, bookName);
         values.put(MyDataBaseHelper.COLUMN_AUTHOR, author);
         values.put(MyDataBaseHelper.COLUMN_SUMMARY, summary);
         values.put(MyDataBaseHelper.COLUMN_RATE, rate);
@@ -94,11 +97,18 @@ public class AddReviewActivity extends AppCompatActivity {
         if (newRowId == -1) {
             Toast.makeText(this, "Error with saving review", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(this, "Review saved with id: " + newRowId, Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(AddReviewActivity.this, AllReviewsActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK );
-            startActivity(intent);
-            finish(); // close the activity
+            Toast.makeText(this, "Review saved", Toast.LENGTH_SHORT).show();
+            Intent mainIntent = new Intent(this, MainActivity.class);
+            mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+
+            Intent allReviewsIntent = new Intent(this, AllReviewsActivity.class);
+
+            TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+            stackBuilder.addNextIntent(mainIntent);
+            stackBuilder.addNextIntent(allReviewsIntent);
+
+            stackBuilder.startActivities();
+            finish();
         }
 
         database.close();

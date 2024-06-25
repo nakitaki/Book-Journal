@@ -69,7 +69,7 @@ public class ReviewsDataFragment extends Fragment {
 
                     int bookId = selectedBookReview.getId();
 
-                    Toast.makeText(getActivity(), "Selected: " + selectedBookReview.getName(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getActivity(), "Selected: " + selectedBookReview.getName(), Toast.LENGTH_SHORT).show();
 
                     ReviewDetailsFragment reviewDetailsFragment = ReviewDetailsFragment.newInstance(bookId);
 
