@@ -7,16 +7,16 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/book_icon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/book_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.Project_f104774"
         tools:targetApi="31">
 
         <!--сървиса може да се създава от системата-->
         <!--дали компоненти на други приложения могат да се обръщат към сървиса        -->
-        <service android:name=".service.MyService"
+        <service android:name=".service.BooksService"
             android:enabled="true"
             android:exported="false" />
         <activity android:name=".activity.BooksSearchActivity" />

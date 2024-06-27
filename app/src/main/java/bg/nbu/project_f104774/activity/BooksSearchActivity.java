@@ -1,7 +1,6 @@
 package bg.nbu.project_f104774.activity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,22 +16,17 @@ import java.util.List;
 import bg.nbu.project_f104774.R;
 import bg.nbu.project_f104774.adapter.BooksAdapter;
 import bg.nbu.project_f104774.model.Book;
-import bg.nbu.project_f104774.model.BookResponse;
-import bg.nbu.project_f104774.network.ApiClient;
-import bg.nbu.project_f104774.network.BooksApiService;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import bg.nbu.project_f104774.service.BooksService;
 
 public class BooksSearchActivity extends AppCompatActivity {
 
-    private static final String API_KEY = "AIzaSyADqcs2PchZqhsQsa7QW84D5ydBwNRWtCg";
     private EditText searchTitleEditText;
     private EditText searchAuthorEditText;
     private Button searchButton;
     private RecyclerView recyclerView;
     private BooksAdapter booksAdapter;
     private List<Book> books = new ArrayList<>();
+    private BooksService booksService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +42,8 @@ public class BooksSearchActivity extends AppCompatActivity {
         booksAdapter = new BooksAdapter(this, books);
         recyclerView.setAdapter(booksAdapter);
 
+        booksService = new BooksService();
+
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,48 +55,24 @@ public class BooksSearchActivity extends AppCompatActivity {
     }
 
     private void searchBooks(String title, String author) {
-        // Clear current books list
         int previousSize = books.size();
         books.clear();
-        booksAdapter.notifyItemRangeRemoved(0, previousSize); // Notify adapter about removed items
+        booksAdapter.notifyItemRangeRemoved(0, previousSize);
 
-        String query;
-        if (!title.isEmpty() && !author.isEmpty()) {
-            query = title + " intitle:" + title + " inauthor:" + author;
-        } else if (!title.isEmpty()) {
-            query = "intitle:" + title;
-        } else if (!author.isEmpty()) {
-            query = "inauthor:" + author;
-        } else {
-            Log.e("BooksSearchActivity", "Both title and author are empty");
-            return;
-        }
-
-        Log.d("BooksSearchActivity", "Query: " + query);
-
-        BooksApiService service = ApiClient.getRetrofitInstance().create(BooksApiService.class);
-        Call<BookResponse> call = service.getBooks(query, title, author, API_KEY);
-
-        call.enqueue(new Callback<BookResponse>() {
+        booksService.searchBooks(title, author, new BooksService.BooksServiceCallback() {
             @Override
-            public void onResponse(Call<BookResponse> call, Response<BookResponse> response) {
-                if (response.isSuccessful()) {
-                    List<Book> newBooks = response.body().getBooks();
-                    if (newBooks != null && !newBooks.isEmpty()) {
-                        Log.d("BooksSearchActivity", "Number of books found: " + newBooks.size());
-                        updateBooksOnUiThread(newBooks);
-                    } else {
-                        Log.d("BooksSearchActivity", "No books found");
-                        displayNoBooksFoundMessage();
-                    }
-                } else {
-                    Log.e("BooksSearchActivity", "Request failed: " + response.message());
-                }
+            public void onSuccess(List<Book> newBooks) {
+                updateBooksOnUiThread(newBooks);
             }
 
             @Override
-            public void onFailure(Call<BookResponse> call, Throwable t) {
-                Log.e("BooksSearchActivity", "Network request failed: " + t.getMessage());
+            public void onError(final String errorMessage) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(BooksSearchActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
     }
@@ -110,18 +82,8 @@ public class BooksSearchActivity extends AppCompatActivity {
             @Override
             public void run() {
                 books.addAll(newBooks);
-                booksAdapter.notifyItemRangeInserted(0, newBooks.size()); // Notify adapter about inserted items
+                booksAdapter.notifyItemRangeInserted(0, newBooks.size());
             }
         });
     }
-
-    private void displayNoBooksFoundMessage() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(BooksSearchActivity.this, "No books found", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
 }

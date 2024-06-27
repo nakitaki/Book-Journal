@@ -27,7 +27,7 @@ public class ReviewEditActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_review);
+        setContentView(R.layout.activity_review_edit);
 
         bookName = findViewById(R.id.edit_book_name);
         author = findViewById(R.id.edit_author);
