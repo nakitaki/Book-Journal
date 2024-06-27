@@ -1,7 +1,5 @@
 package bg.nbu.project_f104774.service;
 
-import android.util.Log;
-
 import java.util.List;
 
 import bg.nbu.project_f104774.model.Book;
@@ -34,12 +32,9 @@ public class BooksService {
         } else if (!author.isEmpty()) {
             query = "inauthor:" + author;
         } else {
-            Log.e("BooksService", "Both title and author are empty");
             callback.onError("Both title and author are empty");
             return;
         }
-
-        Log.d("BooksService", "Query: " + query);
 
         Call<BookResponse> call = apiService.getBooks(query, title, author, API_KEY);
 
@@ -49,21 +44,17 @@ public class BooksService {
                 if (response.isSuccessful()) {
                     List<Book> newBooks = response.body().getBooks();
                     if (newBooks != null && !newBooks.isEmpty()) {
-                        Log.d("BooksService", "Number of books found: " + newBooks.size());
                         callback.onSuccess(newBooks);
                     } else {
-                        Log.d("BooksService", "No books found");
                         callback.onError("No books found");
                     }
                 } else {
-                    Log.e("BooksService", "Request failed: " + response.message());
                     callback.onError("Request failed: " + response.message());
                 }
             }
 
             @Override
             public void onFailure(Call<BookResponse> call, Throwable t) {
-                Log.e("BooksService", "Network request failed: " + t.getMessage());
                 callback.onError("Network request failed: " + t.getMessage());
             }
         });

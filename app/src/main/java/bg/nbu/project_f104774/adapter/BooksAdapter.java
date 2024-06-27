@@ -3,7 +3,6 @@ package bg.nbu.project_f104774.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,11 +38,10 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHold
         Book book = books.get(position);
 
         if (book != null && book.getVolumeInfo() != null) {
-            // Set title
+
             String title = book.getVolumeInfo().getTitle();
             holder.titleTextView.setText(title != null ? title : "No title");
 
-            // Set authors
             List<String> authors = book.getVolumeInfo().getAuthors();
             if (authors != null && !authors.isEmpty()) {
                 holder.authorsTextView.setText(TextUtils.join(", ", authors));
@@ -56,8 +54,6 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHold
                 intent.putExtra("bookJson", book.toJson());
                 context.startActivity(intent);
             });
-        } else {
-            Log.e("BooksAdapter", "Null book or volume info object at position " + position);
         }
     }
 

@@ -37,7 +37,6 @@ public class ReviewEditActivity extends AppCompatActivity {
 
         dbHelper = new MyDataBaseHelper(this);
 
-        // Retrieve the reviewId passed from DetailsFragment or wherever
         reviewId = getIntent().getLongExtra("reviewId", -1);
 
         if (reviewId == -1) {
@@ -45,7 +44,6 @@ public class ReviewEditActivity extends AppCompatActivity {
             finish();
         }
 
-        // Fetch current review details and populate EditText fields
         populateFields();
 
         saveButton.setOnClickListener(new View.OnClickListener() {
@@ -59,7 +57,6 @@ public class ReviewEditActivity extends AppCompatActivity {
     }
 
     private void populateFields() {
-        // Fetch current review details from database and populate EditText fields
         BookReview bookReview = dbHelper.getBookReviewById((int) reviewId);
         if (bookReview != null) {
             bookName.setText(bookReview.getName());
@@ -89,8 +86,6 @@ public class ReviewEditActivity extends AppCompatActivity {
         }
         int rate = Integer.parseInt(rateStr);
 
-
-        // Update review in database
         SQLiteDatabase database = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(MyDataBaseHelper.COLUMN_BOOK_NAME, bookName);
@@ -98,9 +93,8 @@ public class ReviewEditActivity extends AppCompatActivity {
         values.put(MyDataBaseHelper.COLUMN_SUMMARY, summary);
         values.put(MyDataBaseHelper.COLUMN_RATE, rate);
 
-        // Define the selection criteria
         String selection = MyDataBaseHelper.UID + "=?";
-        // Specify the arguments in placeholder order
+
         String[] selectionArgs = { String.valueOf(reviewId) };
 
         int updatedRows = database.update(MyDataBaseHelper.TABLE_NAME, values, selection, selectionArgs);
@@ -110,30 +104,23 @@ public class ReviewEditActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Review updated successfully", Toast.LENGTH_SHORT).show();
 
-            // Close database connection
             database.close();
 
-            // Navigate back to DetailsFragment
             navigateToDetailsFragment(reviewId);
         }
     }
 
     private void navigateToDetailsFragment(long reviewId) {
-        // Create an instance of DetailsFragment with arguments
         ReviewDetailsFragment reviewDetailsFragment = ReviewDetailsFragment.newInstance((int) reviewId);
 
-        // Replace the current fragment (ReviewEditActivity) with DetailsFragment
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container_view, reviewDetailsFragment)
-                .addToBackStack(null)  // Optional: Adds the transaction to the back stack
+                .addToBackStack(null)
                 .commit();
     }
 
     private boolean isValidRate(String rateStr) {
-        // Regular expression to check for valid integers in the range of 1 to 5
         String regex = "[1-5]";
-
-        // Check if rateStr matches the regex
         return rateStr.matches(regex);
     }
 }

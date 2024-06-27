@@ -50,11 +50,9 @@ public class ReviewDetailsFragment extends Fragment {
         if (getArguments() != null) {
             bookId = getArguments().getInt(ARG_BOOK_ID);
 
-            // Fetch the BookReview by ID
             MyDataBaseHelper dbHelper = new MyDataBaseHelper(getActivity());
             BookReview bookReview = dbHelper.getBookReviewById(bookId);
 
-            // Display book review details
             TextView nameTextView = view.findViewById(R.id.name_text_view);
             TextView authorTextView = view.findViewById(R.id.author_text_view);
             TextView summaryTextView = view.findViewById(R.id.summary_text_view);
@@ -91,7 +89,6 @@ public class ReviewDetailsFragment extends Fragment {
         return view;
     }
 
-    //TODO what is dis
     private void loadReviewDetails(View view, int bookId) {
         MyDataBaseHelper dbHelper = new MyDataBaseHelper(getActivity());
         BookReview bookReview = dbHelper.getBookReviewById(bookId);
@@ -112,14 +109,12 @@ public class ReviewDetailsFragment extends Fragment {
     }
 
     private void editReview(long reviewId) {
-        // Example: Navigate to ReviewEditActivity passing the reviewId
         Intent intent = new Intent(getActivity(), ReviewEditActivity.class);
         intent.putExtra("reviewId", reviewId);
         startActivity(intent);
     }
 
     private void deleteReview(int reviewId) {
-        // Create a confirmation dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         builder.setTitle("Confirm Delete");
         builder.setMessage("Are you sure you want to delete this review?");
@@ -137,9 +132,7 @@ public class ReviewDetailsFragment extends Fragment {
         MyDataBaseHelper dbHelper = new MyDataBaseHelper(getActivity());
         SQLiteDatabase database = dbHelper.getWritableDatabase();
 
-        // Define the selection criteria
         String selection = MyDataBaseHelper.UID + "=?";
-        // Specify the arguments in placeholder order
         String[] selectionArgs = { String.valueOf(reviewId) };
 
         int deletedRows = database.delete(MyDataBaseHelper.TABLE_NAME, selection, selectionArgs);
@@ -148,7 +141,6 @@ public class ReviewDetailsFragment extends Fragment {
             Toast.makeText(getActivity(), "Review deletion failed", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(getActivity(), "Review deleted successfully", Toast.LENGTH_SHORT).show();
-            // Navigate back to previous fragment or activity
             requireActivity().getSupportFragmentManager().popBackStack();
         }
 

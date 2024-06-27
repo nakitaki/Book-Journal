@@ -22,8 +22,6 @@ public class BooksSearchActivity extends AppCompatActivity {
 
     private EditText searchTitleEditText;
     private EditText searchAuthorEditText;
-    private Button searchButton;
-    private RecyclerView recyclerView;
     private BooksAdapter booksAdapter;
     private List<Book> books = new ArrayList<>();
     private BooksService booksService;
@@ -33,10 +31,10 @@ public class BooksSearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book);
 
-        recyclerView = findViewById(R.id.recycler_view);
+        RecyclerView recyclerView = findViewById(R.id.recycler_view);
         searchTitleEditText = findViewById(R.id.search_title);
         searchAuthorEditText = findViewById(R.id.search_author);
-        searchButton = findViewById(R.id.search_button);
+        Button searchButton = findViewById(R.id.search_button);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         booksAdapter = new BooksAdapter(this, books);

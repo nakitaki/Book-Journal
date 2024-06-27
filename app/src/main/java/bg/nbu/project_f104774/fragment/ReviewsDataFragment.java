@@ -3,7 +3,6 @@ package bg.nbu.project_f104774.fragment;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,8 +72,6 @@ public class ReviewsDataFragment extends Fragment {
 
                     ReviewDetailsFragment reviewDetailsFragment = ReviewDetailsFragment.newInstance(bookId);
 
-                    Log.d("DataFragment", "Passing Book ID: " + bookId);
-
                     getParentFragmentManager().beginTransaction()
                             .replace(R.id.fragment_container_view, reviewDetailsFragment)
                             .addToBackStack(null)
@@ -93,7 +90,6 @@ public class ReviewsDataFragment extends Fragment {
 
     @Override
     public void onDestroy() {
-        // Close the database connection
         database.close();
         dbHelper.close();
         super.onDestroy();
