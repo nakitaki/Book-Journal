@@ -11,7 +11,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class BooksService {
-    private static final String API_KEY = "AIzaSyADqcs2PchZqhsQsa7QW84D5ydBwNRWtCg";
+    private static final String API_KEY = "";
     private final BooksApiService apiService;
 
     public interface BooksServiceCallback {
